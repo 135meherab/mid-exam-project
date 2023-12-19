@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Profile page{% endblock title %}
+{% block content %}
+<div class='text-center'>
+    <h1>Wellcome {{data.first_name}} {{data.last_name}}</h1>
+    <a class="btn btn-success" href="{% url 'edit_profile_page' data.id%}">Change User detaiis</a>
+</div>
+<hr>
+<br>
+<div style="display:grid; grid-template-columns:auto auto auto auto; justify-content:center; gap:20px">
+    {% for car in cars%}
+    <div class="card" style="width: 18rem">
+        <img src="{{car.image.url}}" class="card-img-top" alt="..." />
+        <div class="card-body">
+            <h5 class="card-title">{{car.car_name}}</h5>
+            <p class="card-text"><b>Price:</b>{{car.price}}</p>
+        </div>
+    </div>
+    {% endfor%}
+  </div>
+{% endblock content %}

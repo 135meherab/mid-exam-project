@@ -1,0 +1,45 @@
+{% extends "base.html" %} 
+{% load static %} 
+
+{% block title %}
+Home page
+{%endblock title %}
+
+{% block content %}
+{%for msg in messages %}
+<p class="bg-success text-white p-3 m-auto width-50%">{{msg}}</p>
+{%endfor%}
+<div>
+  <img src="{% static 'home.jpg'%}" class="d-block w-100" alt="..." />
+  <div class="carousel-caption d-none d-md-block">
+    <h3>GET YOUR FEVOURITE CAR</h3>
+    <h3>NOW</h3>
+  </div>
+</div>
+<div class="m-4" >
+  <div class='text-center'>
+    {% for brand in brands%}
+    <a class="btn btn-secondary px-5 mt-3" href="{% url 'filter' brand.slug %}">{{brand.brand_name}}</a>
+    {%endfor%}
+  </div>
+  <br />
+  {%if data|length > 0 %}
+    <h1 class="text-center">{{data|length}} results found</h1>
+    <br>
+  <div style="display:grid; grid-template-columns:auto auto auto auto; justify-content:center; gap:20px">
+    {% for dt in data%}
+    <div class="card" style="width: 18rem">
+        <img src="{{dt.image.url}}" class="card-img-top" alt="..." />
+        <div class="card-body">
+            <h5 class="card-title"><a class='text-decoration-none text-black' href="{% url 'details' dt.id%}">{{dt.car_name}}</a></h5>
+            <p class="card-text"><b>Price:</b>{{dt.price}}</p>
+            <small>{{dt.details | truncatewords:10}}</small>
+        </div>
+    </div>
+    {% endfor%}
+  </div>
+  {%else%}
+    <h1 class="text-center">NO RESULT FOUND</h1>
+    {%endif%}
+</div>
+{% endblock content %}

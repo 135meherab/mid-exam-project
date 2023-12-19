@@ -1,0 +1,57 @@
+{% extends "base.html" %} 
+{% load crispy_forms_tags %}
+
+{% block title %}
+Home page
+{%endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-6">
+        <img src="{{data.image.url}}" width="100%" alt="">
+    </div>
+    <div class="col-6">
+        <h5 class="card-title">{{data.car_name}}</a></h5>
+        <br>
+        <p class="card-text"><b>Price: </b>{{data.price}}</p>
+        <p class="card-text"><b>Available: </b>{{data.in_stock}}</p>
+        <small>{{data.details}}</small>
+        <br>
+        <br>
+        {%if user.is_authenticated %}
+            {% comment %} <form>
+                {% csrf_token %} {% endcomment %}
+              <a class="btn btn-primary px-5" href="{% url 'buy' data.id%}">Buy Now</a>
+            {% comment %} </form> {% endcomment %}
+        {%endif%}
+    </div>
+</div>
+<br>
+<div>
+    <div class="card">
+        <div class="card-header">
+            Comments
+        </div>
+        {%for comment in comments%}
+        <div class="card-body">
+            <h6 class="card-title">{{comment.name}}</h6>
+            <p class="card-text">{{comment.email}}</p>
+            <small>{{comment.time}}</small>
+            <p>{{comment.commnet}}</p>
+            <hr>
+        </div>
+        {%endfor%}
+    </div>
+
+</div>
+<br>
+<div>
+    <form style='width: 50%; margin:auto; padding-top: 30px' action="" method='POST' novalidate>
+        {% csrf_token %}
+        <h1>Add your Commnet</h1>
+        {{form | crispy}}
+        <br>
+        <button class="btn btn-success" type="submit">Submit</button>
+</div>
+
+{% endblock content %}
